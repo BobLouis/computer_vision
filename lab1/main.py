@@ -67,7 +67,7 @@ class App(QWidget):
 
         self.img_smo_button1 = QPushButton('Gaussian Blur', self)
         self.img_smo_button1.move(740, 120)
-        self.img_smo_button1.clicked.connect(self.openFileNameDialog1)
+        self.img_smo_button1.clicked.connect(self.img_proc_func5)
 
         self.img_smo_button2 = QPushButton('Bilateral filter', self)
         self.img_smo_button2.move(740, 200)
@@ -208,6 +208,26 @@ class App(QWidget):
 
         cv2.createTrackbar("Blend", "Blend", 0, 255, updateBlend)
         cv2.setTrackbarPos("Blend", "Blend", 0)
+
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+    def img_proc_func5(self):
+        img = cv2.imread(img1_path)
+
+        cv2.imshow("guassian_blur", img)
+
+        def update(x):
+            # global weight, img1, img2
+            k = 2 * x + 1
+            gau_img = cv2.GaussianBlur(img, (k, k), 0)
+            if x == 0:
+                cv2.imshow("guassian_blur", img)
+            else:
+                cv2.imshow("guassian_blur", gau_img)
+
+        cv2.createTrackbar("magnitude:", "guassian_blur", 0, 10, update)
+        cv2.setTrackbarPos("magnitude:", "guassian_blur", 0)
 
         cv2.waitKey(0)
         cv2.destroyAllWindows()
