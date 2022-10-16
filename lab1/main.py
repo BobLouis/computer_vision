@@ -71,7 +71,7 @@ class App(QWidget):
 
         self.img_smo_button2 = QPushButton('Bilateral filter', self)
         self.img_smo_button2.move(740, 200)
-        self.img_smo_button2.clicked.connect(self.openFileNameDialog1)
+        self.img_smo_button2.clicked.connect(self.img_proc_func6)
 
         self.img_smo_button3 = QPushButton('Median filter', self)
         self.img_smo_button3.move(740, 280)
@@ -228,6 +228,24 @@ class App(QWidget):
 
         cv2.createTrackbar("magnitude:", "guassian_blur", 0, 10, update)
         cv2.setTrackbarPos("magnitude:", "guassian_blur", 0)
+
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+    def img_proc_func6(self):
+        img = cv2.imread(img1_path)
+        cv2.imshow("biliter_filter", img)
+
+        def update(x):
+            # global weight, img1, img2
+            bil_img = cv2.bilateralFilter(img, x, 90, 90)
+            if x == 0:
+                cv2.imshow("biliter_filter", img)
+            else:
+                cv2.imshow("biliter_filter", bil_img)
+
+        cv2.createTrackbar("magnitude:", "biliter_filter", 0, 10, update)
+        cv2.setTrackbarPos("magnitude:", "biliter_filter", 0)
 
         cv2.waitKey(0)
         cv2.destroyAllWindows()
