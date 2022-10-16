@@ -75,7 +75,7 @@ class App(QWidget):
 
         self.img_smo_button3 = QPushButton('Median filter', self)
         self.img_smo_button3.move(740, 280)
-        self.img_smo_button3.clicked.connect(self.openFileNameDialog1)
+        self.img_smo_button3.clicked.connect(self.img_proc_func7)
         self.show()
 
     def openFileNameDialog1(self):
@@ -249,6 +249,26 @@ class App(QWidget):
 
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+
+    def img_proc_func7(self):
+        img = cv2.imread(img1_path)
+        cv2.imshow("median_filter", img)
+
+        def update(x):
+            # global weight, img1, img2
+            k = 2 * x + 1
+            med_img = cv2.medianBlur(img, k)
+            if x == 0:
+                cv2.imshow("median_filter", img)
+            else:
+                cv2.imshow("median_filter", med_img)
+
+        cv2.createTrackbar("magnitude:", "median_filter", 0, 10, update)
+        cv2.setTrackbarPos("magnitude:", "median_filter", 0)
+
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
 
 
 if __name__ == '__main__':
